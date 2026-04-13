@@ -3,7 +3,7 @@ import { Award, GraduationCap } from "lucide-react";
 
 export function Education() {
   return (
-    <section className="py-24 px-6 bg-card/30">
+    <section className="py-24 px-6 bg-card/30" style={{ perspective: "1500px" }}>
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -21,6 +21,12 @@ export function Education() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
+              whileHover={{
+                rotateY: 5,
+                scale: 1.02,
+                transition: { duration: 0.3 }
+              }}
+              style={{ transformStyle: "preserve-3d" }}
               className="bg-card border border-white/10 rounded-xl p-8"
             >
               <div className="flex items-start gap-4 mb-4">
@@ -40,6 +46,12 @@ export function Education() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
+              whileHover={{
+                rotateY: -5,
+                scale: 1.02,
+                transition: { duration: 0.3 }
+              }}
+              style={{ transformStyle: "preserve-3d" }}
               className="bg-card border border-white/10 rounded-xl p-8"
             >
               <div className="flex items-start gap-4 mb-4">

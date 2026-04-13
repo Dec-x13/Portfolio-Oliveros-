@@ -32,13 +32,14 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="flex gap-4 justify-center mb-12">
+          <div className="flex gap-4 justify-center mb-12" style={{ perspective: "1000px" }}>
             <motion.a
               href="https://github.com/Dec-x13"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 hover:border-[#06b6d4]/50 transition-colors"
-              whileHover={{ y: -4 }}
+              whileHover={{ y: -8, rotateY: 15, scale: 1.1 }}
+              style={{ transformStyle: "preserve-3d" }}
             >
               <Github className="w-5 h-5" />
             </motion.a>
@@ -47,7 +48,8 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 hover:border-[#06b6d4]/50 transition-colors"
-              whileHover={{ y: -4 }}
+              whileHover={{ y: -8, rotateY: -15, scale: 1.1 }}
+              style={{ transformStyle: "preserve-3d" }}
             >
               <Linkedin className="w-5 h-5" />
             </motion.a>

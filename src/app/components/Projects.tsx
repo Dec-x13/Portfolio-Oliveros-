@@ -1,6 +1,101 @@
-import { motion } from "motion/react";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ExternalLink, Github } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { useRef, MouseEvent } from "react";
+
+function ProjectCard({ project, index }: { project: any; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7.5deg", "-7.5deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7.5deg", "7.5deg"]);
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className="group relative bg-card border border-white/10 rounded-xl overflow-hidden hover:border-white/20 transition-all"
+    >
+      <motion.div
+        style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}
+        className="relative"
+      >
+        <div className="relative aspect-video overflow-hidden">
+          <ImageWithFallback
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+        </div>
+
+        <div className="p-6">
+          <h3 className="text-2xl font-semibold mb-3 group-hover:text-[#06b6d4] transition-colors">
+            {project.title}
+          </h3>
+          <p className="text-white/60 mb-4 leading-relaxed">
+            {project.description}
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-4">
+            {project.tags.map((tag: string, i: number) => (
+              <span
+                key={i}
+                className="px-3 py-1 text-sm rounded-full border border-white/10 bg-white/5"
+                style={{ borderColor: `${project.color}40` }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex gap-4">
+            <button className="flex items-center gap-2 text-sm text-white/70 hover:text-[#06b6d4] transition-colors">
+              <Github className="w-4 h-4" />
+              Code
+            </button>
+            <button className="flex items-center gap-2 text-sm text-white/70 hover:text-[#06b6d4] transition-colors">
+              <ExternalLink className="w-4 h-4" />
+              Live Demo
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export function Projects() {
   const projects = [
@@ -35,7 +130,7 @@ export function Projects() {
   ];
 
   return (
-    <section id="projects" className="py-24 px-6 bg-card/30">
+    <section id="projects" className="py-24 px-6 bg-card/30" style={{ perspective: "2000px" }}>
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -52,56 +147,7 @@ export function Projects() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {projects.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group relative bg-card border border-white/10 rounded-xl overflow-hidden hover:border-white/20 transition-all"
-                whileHover={{ y: -4 }}
-              >
-                <div className="relative aspect-video overflow-hidden">
-                  <ImageWithFallback
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-2xl font-semibold mb-3 group-hover:text-[#06b6d4] transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-white/60 mb-4 leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, i) => (
-                      <span
-                        key={i}
-                        className="px-3 py-1 text-sm rounded-full border border-white/10 bg-white/5"
-                        style={{ borderColor: `${project.color}40` }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex gap-4">
-                    <button className="flex items-center gap-2 text-sm text-white/70 hover:text-[#06b6d4] transition-colors">
-                      <Github className="w-4 h-4" />
-                      Code
-                    </button>
-                    <button className="flex items-center gap-2 text-sm text-white/70 hover:text-[#06b6d4] transition-colors">
-                      <ExternalLink className="w-4 h-4" />
-                      Live Demo
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
+              <ProjectCard key={index} project={project} index={index} />
             ))}
           </div>
         </motion.div>

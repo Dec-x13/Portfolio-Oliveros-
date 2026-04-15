@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useRef, MouseEvent } from "react";
+import gradPhoto from "../../imports/Oliveros_Grad.jpg";
 
 export function About() {
   const imageRef = useRef<HTMLDivElement>(null);
@@ -58,15 +58,15 @@ export function About() {
                 rotateY,
                 transformStyle: "preserve-3d",
               }}
-              className="relative aspect-[4/5] max-w-md mx-auto rounded-2xl overflow-hidden border border-white/10"
+              className="relative aspect-square max-w-md mx-auto rounded-2xl overflow-hidden border border-white/10"
             >
-              <motion.div style={{ transform: "translateZ(30px)" }}>
-                <ImageWithFallback
-                  src="C:\Users\Admin\Documents\MyProjects\Portfolio_Oliveros\src\app\components\img\Oliveros_Grad.jpg"
-                  alt="Professional portrait"
-                  className="w-full h-full object-cover"
+              <motion.div style={{ transform: "translateZ(30px)" }} className="w-full h-full">
+                <img
+                  src={gradPhoto}
+                  alt="Danielle Cedric T. Oliveros - Professional portrait"
+                  className="w-full h-full object-contain bg-background"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent pointer-events-none" />
               </motion.div>
             </motion.div>
 

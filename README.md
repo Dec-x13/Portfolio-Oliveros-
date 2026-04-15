@@ -1,7 +1,7 @@
 
-  # Personal Portfolio Website Design
+  # Oliveros Portfolio Website 
 
-  This is a code bundle for Personal Portfolio Website Design.
+  This is a code bundle for Oliveros Portfolio Website.
 
   ## Running the code
 

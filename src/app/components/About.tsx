@@ -62,7 +62,7 @@ export function About() {
             >
               <motion.div style={{ transform: "translateZ(30px)" }}>
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1752859951149-7d3fc700a7ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                  src="C:\Users\Admin\Documents\MyProjects\Portfolio_Oliveros\src\app\components\img\Oliveros_Grad.jpg"
                   alt="Professional portrait"
                   className="w-full h-full object-cover"
                 />

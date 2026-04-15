@@ -24,6 +24,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  base: '/Portfolio_Oliveros/',
   resolve: {
     alias: {
       // Alias @ to the src directory
